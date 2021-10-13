@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <title>Login and Registration</title>
+</head>
+<body>
+    <div class="container"> <!-- BEGIN WHOLE PAGE CONTAINER -->
+        <div class="row">
+            <div class="col"> <!-- BEGIN REGISTRATION COLUMN -->
+                <h4>Register a New User:</h4>
+                <partial name="RegisterPartial" />
+            </div> <!-- END REGISTRATION COLUMN -->
+
+            <div class="col"> <!-- BEGIN LOGIN COLUMN -->
+                <h4>Already have an account? Login Here:</h4>
+                <partial name="LoginPartial" />
+            </div> <!-- END LOGIN COLUMN -->
+        </div>
+    </div> <!-- END WHOLE PAGE CONTAINER -->
+</body>
+</html>

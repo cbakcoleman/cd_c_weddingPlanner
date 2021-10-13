@@ -16,5 +16,17 @@ namespace cd_c_weddingPlanner.Controllers
         {
             _context = context;
         }
+
+        [HttpGet("")]
+        public IActionResult Index()
+        {
+            return RedirectToAction("LoginRegistration");
+        }
+
+        [HttpGet("LoginRegistration")]
+        public IActionResult LoginRegistration()
+        {
+            return View();
+        }
     }
 }
