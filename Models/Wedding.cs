@@ -26,7 +26,7 @@ namespace cd_c_weddingPlanner.Models
         [Display(Name =  "Wedding Location: ")]
         public string Location {get;set;}
 
-        public List<User> Users {get;set;}
+        public List<Guest> Users {get;set;}
 
         public DateTime CreatedAt {get;set;} = DateTime.Now;
 

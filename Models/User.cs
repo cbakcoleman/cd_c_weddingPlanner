@@ -39,7 +39,7 @@ namespace cd_c_weddingPlanner.Models
         [Display(Name = "Confirm Password: ")]
         public string Confirm {get;set;}
 
-        public List<Wedding> Weddings {get;set;}
+        public List<Guest> Weddings {get;set;}
         public DateTime CreatedAt {get;set;} = DateTime.Now;
 
         public DateTime UpdatedAt {get;set;} = DateTime.Now;

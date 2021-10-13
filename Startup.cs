@@ -41,6 +41,7 @@ namespace cd_c_weddingPlanner
             app.UseStaticFiles();
             app.UseSession();
             app.UseMvc();
+        }
         //     app.UseRouting();
 
         //     app.UseEndpoints(endpoints =>
