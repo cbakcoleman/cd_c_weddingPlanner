@@ -48,7 +48,9 @@ namespace cd_c_weddingPlanner.Controllers
                 _context.Add(usertoreg);
                 _context.SaveChanges();
 
-                HttpContext.Session.SetInt32("LoggedinUser", usertoreg.UserId);
+                HttpContext.Session.SetInt32("loggedinuser", usertoreg.UserId);
+
+                // MAYBE CHANGE THIS BACK TO LOGINREGISTRATION IF CAN NOT MAKE WORK
 
                 return RedirectToAction("Dashboard");
             }
@@ -67,7 +69,7 @@ namespace cd_c_weddingPlanner.Controllers
 
                 if(userinDb == null)
                 {
-                    ModelState.AddModelError("Email", "Invalid Email/Password.");
+                    ModelState.AddModelError("LoginEmail", "Invalid Email/Password.");
                     return View("LoginRegistration");
                 }
                 var CBHash= new PasswordHasher<LoginUser>();

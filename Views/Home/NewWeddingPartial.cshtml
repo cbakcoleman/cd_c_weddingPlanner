@@ -3,25 +3,25 @@
 <form action="/submitWedding/add" method="post" class="form-group">
     <div class="card m-1 p-3">
         <div>
-            <span asp-validation-for="Spouse1"></span>
+            <span class="mtb-2 text-danger" asp-validation-for="Spouse1"></span>
         </div>
         <label asp-for="Spouse1"></label>
         <input asp-for="Spouse1" class="form-control">
 
     <div>
-        <span asp-validation-for="Spouse2"></span>
+        <span class="mtb-2 text-danger" asp-validation-for="Spouse2"></span>
     </div>
     <label asp-for="Spouse2"></label>
     <input asp-for="Spouse2" class="form-control">
 
     <div>
-        <span asp-validation-for="WeddingDate"></span>
+        <span class="mtb-2 text-danger" asp-validation-for="WeddingDate"></span>
     </div>
     <label asp-for="WeddingDate"></label>
     <input asp-for="WeddingDate" class="form-control">
 
     <div>
-        <span asp-validation-for="Location"></span>
+        <span class="mtb-2 text-danger" asp-validation-for="Location"></span>
     </div>
     <label asp-for="Location"></label>
     <input asp-for="Location" class="form-control">

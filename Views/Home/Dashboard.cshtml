@@ -40,18 +40,19 @@
                                 <td>@wedding.WeddingDate.ToString("MMMM dd, yyyy")</td>
                                 <td>@wedding.Guests.Count</td>
                                 <td>
-                                    @if(wedding.Guests.Any(g => g.UserId == Model.LoggedinUserId))
-                                    {
-                                        <a href="/wedding/@wedding.WeddingId/decline">Un-RSVP</a>
-                                    }
-                                    else if(wedding.Guests.Any(g => g.UserId != Model.LoggedinUserId))
-                                    {
-                                        <a href="/wedding/@wedding.WeddingId/attend">RSVP</a>
-                                    }
                                     @if(wedding.UserId == Model.LoggedinUserId)
                                     {
                                         <a href="/wedding/@wedding.WeddingId/delete">CALL OFF THE WEDDING!</a>
                                     }
+                                    else if(wedding.Guests.Any(g => g.UserId == Model.LoggedinUserId))
+                                    {
+                                        <a href="/wedding/@wedding.WeddingId/decline">Un-RSVP</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="/wedding/@wedding.WeddingId/attend">RSVP</a>
+                                    }
+                                    
                                 </td>
                             </tr>
                         }
