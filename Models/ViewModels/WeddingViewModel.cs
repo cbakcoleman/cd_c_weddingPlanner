@@ -5,13 +5,15 @@ namespace cd_c_weddingPlanner.Models
     public class WeddingView
     {
         public Wedding Wedding {get;set;}
+
+        
         public int LoggedinuserId {get;set;}
 
         public List<Guest> Guests {get;set;}
 
-        public WeddingView(List<Guest> guests, int userId)
+        public WeddingView(Wedding wedding, int userId)
         {
-            Guests = guests;
+            Wedding = wedding;
             LoggedinuserId = userId;
         }
     }

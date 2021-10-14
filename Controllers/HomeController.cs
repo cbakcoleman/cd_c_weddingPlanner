@@ -207,21 +207,24 @@ namespace cd_c_weddingPlanner.Controllers
             _context.SaveChanges();
             return RedirectToAction("Dashboard");
         }
-        // [HttpGet("wedding/{weddingId}")]
-        // public IActionResult ThisWedding(int weddingId)
-        // {
-        //     int? LoggedinuserId = HttpContext.Session.GetInt32("loggedinuser");
-        //     if(LoggedinuserId == null)
-        //     {
-        //         return RedirectToAction("LoginRegistration");
-        //     }
+        [HttpGet("wedding/{weddingId}")]
+        public IActionResult ThisWedding(int weddingId)
+        {
+            int? LoggedinuserId = HttpContext.Session.GetInt32("loggedinuser");
+            if(LoggedinuserId == null)
+            {
+                return RedirectToAction("LoginRegistration");
+            }
 
-        //     // List<Guest> WeddingGuests = _context.Weddings
-        //     //     .Include(w => w.Guests)
-        //     //     .ThenInclude(g => g.User)
-        //     //     .Where(w => w.Guests.Any(p => p.WeddingId == weddingId))
-        //     //     .ToList();
-        // }
+            Wedding Awedding = _context.Weddings
+                .Include(w => w.Guests)
+                .ThenInclude(g => g.User)
+                .FirstOrDefault(w => w.WeddingId == weddingId);
+
+            WeddingView ToDisplay = new WeddingView(Awedding, (int)LoggedinuserId);
+        
+            return View();
+        }
 
     }
 }
