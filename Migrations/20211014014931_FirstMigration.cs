@@ -36,12 +36,19 @@ namespace cd_c_weddingPlanner.Migrations
                     Spouse2 = table.Column<string>(nullable: false),
                     WeddingDate = table.Column<DateTime>(nullable: false),
                     Location = table.Column<string>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Weddings", x => x.WeddingId);
+                    table.ForeignKey(
+                        name: "FK_Weddings_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -81,6 +88,11 @@ namespace cd_c_weddingPlanner.Migrations
                 name: "IX_Guests_WeddingId",
                 table: "Guests",
                 column: "WeddingId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Weddings_UserId",
+                table: "Weddings",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -89,10 +101,10 @@ namespace cd_c_weddingPlanner.Migrations
                 name: "Guests");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Weddings");
 
             migrationBuilder.DropTable(
-                name: "Weddings");
+                name: "Users");
         }
     }
 }

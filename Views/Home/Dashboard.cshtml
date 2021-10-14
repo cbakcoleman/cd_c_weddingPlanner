@@ -1,0 +1,68 @@
+@model cd_c_weddingPlanner.Models.DashboardView
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <title>Dashboard</title>
+</head>
+<body>
+    <div class="container"> <!-- BEGIN WHOLE PAGE CONTAINER -->
+        <div class="row"> <!-- BEGIN HEADER ROW -->
+            <div class="col">
+                <h4>Welcome to the Wedding Planner!</h4>
+            </div>
+            <div class="col">
+                <a href="/logout">Logout</a>
+            </div>
+        </div> <!-- END HEADER ROW -->
+
+        <div class="row"> <!-- BEGIN MAIN BODY ROW -->
+            <div class="col">
+                <table class="table table-striped">
+                    <thead>
+                        <th scope="col">Wedding</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Guests Attending</th>
+                        <th scope="col">Actions</th>
+                    </thead>
+                    <tbody>
+                        @foreach(var wedding in Model.Weddings)
+                        {
+                            <td>@wedding.Spouse1 & @wedding.Spouse2</td>
+                            <td>@wedding.WeddingDate</td>
+                            <td>@wedding.Guests.Count</td>
+                            <td>
+                                @if(wedding.Guests.Any(g => g.UserId == Model.LoggedinUserId))
+                                {
+                                    <a href="/wedding/@wedding.WeddingId/decline">Un-RSVP</a>
+                                }
+                                else if(wedding.Guests.Any(g => g.UserId != Model.LoggedinUserId))
+                                {
+                                    <a href="/wedding/@wedding.WeddingId/attend">RSVP</a>
+                                }
+                                @if(wedding.UserId == Model.LoggedinUserId)
+                                {
+                                    <a href="/wedding/@wedding.WeddingId/delete">CALL OFF THE WEDDING!</a>
+                                }
+                            </td>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div> <!-- END MAIN BODY ROW -->
+
+        <div class="row"> <!-- BEGIN FOOTER ROW -->
+            <div>
+                <a class="btn btn-outline-dark mt-3" href="/wedding/add">New Wedding</a>
+            </div>
+            
+        </div> <!-- END FOOTER ROW -->
+
+
+    </div> <!-- END WHOLE PAGE CONTAINER -->
+</body>
+</html>

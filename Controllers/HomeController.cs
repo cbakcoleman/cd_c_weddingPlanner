@@ -28,5 +28,146 @@ namespace cd_c_weddingPlanner.Controllers
         {
             return View();
         }
+
+        [HttpPost("Register")]
+        public IActionResult Register(User usertoreg)
+        {
+            if(ModelState.IsValid)
+            {
+                if(_context.Users.Any(u => u.Email == usertoreg.Email))
+                {
+                    ModelState.AddModelError("Email", "The email address you entered is already in use.");
+
+                    return View("LoginRegistration");
+                }
+
+                PasswordHasher<User> CBHash = new PasswordHasher<User>();
+                usertoreg.Password = CBHash.HashPassword(usertoreg, usertoreg.Password);
+
+                
+                _context.Add(usertoreg);
+                _context.SaveChanges();
+
+                HttpContext.Session.SetInt32("LoggedinUser", usertoreg.UserId);
+
+                return RedirectToAction("LoginRegistration");
+            }
+            else
+            {
+                return View("LoginRegistration");
+            }
+        }
+
+        [HttpPost("Login")]
+        public IActionResult Login(LoginUser usertolog)
+        {
+            if(ModelState.IsValid)
+            {
+                var userinDb = _context.Users.FirstOrDefault(u => u.Email == usertolog.LoginEmail);
+
+                if(userinDb == null)
+                {
+                    ModelState.AddModelError("Email", "Invalid Email/Password.");
+                    return View("LoginRegistration");
+                }
+                var CBHash= new PasswordHasher<LoginUser>();
+
+                var result = CBHash.VerifyHashedPassword(usertolog, userinDb.Password, usertolog.LoginPassword);
+
+                if(result == 0)
+                {
+                    ModelState.AddModelError("LoginEmail", "Invalid Email/Password.");
+
+                    return View("LoginRegistration");
+                }
+
+                HttpContext.Session.SetInt32("loggedinuser", userinDb.UserId);
+
+                return RedirectToAction("Dashboard");
+            }
+            else
+            {
+                return View("LoginRegistration");
+            }
+        }
+
+        [HttpGet("Logout")]
+        public RedirectToActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("LoginRegistration");
+        }
+
+        [HttpGet("Dashboard")]
+        public IActionResult Dashboard()
+        {
+            int? LoggedinuserId = HttpContext.Session.GetInt32("loggedinuser");
+            if(LoggedinuserId == null)
+            {
+                return RedirectToAction("LoginRegistration");
+            }
+
+            List<Wedding> AllWeddings = _context.Weddings
+                .Include(w => w.Guests)
+                .ToList();
+
+            DashboardView ToDisplay = new DashboardView(AllWeddings, (int)LoggedinuserId);
+            System.Console.WriteLine(AllWeddings);
+
+            return View(ToDisplay);
+        }
+
+        [HttpGet("wedding/add")]
+        public IActionResult NewWedding()
+        {
+            int? LoggedinuserId = HttpContext.Session.GetInt32("loggedinuser");
+            if(LoggedinuserId == null)
+            {
+                return RedirectToAction("LoginRegistration");
+            }
+
+            return View();
+        }
+
+        [HttpPost("submitWedding/add")]
+        public IActionResult CreateWedding(Wedding newWedding)
+        {
+            int? LoggedinuserId = HttpContext.Session.GetInt32("loggedinuser");
+            if(LoggedinuserId == null)
+            {
+                return RedirectToAction("LoginRegistration");
+            }
+
+            if(ModelState.IsValid)
+            {
+                newWedding.UserId = (int) LoggedinuserId;
+
+                _context.Add(newWedding);
+                _context.SaveChanges();
+
+                return RedirectToAction("dashboard");
+            }
+            else
+            {
+                return View("NewWedding");
+            }
+        }
+        
+        // [HttpGet("wedding/{weddingId}")]
+        // public IActionResult ThisWedding(int weddingId)
+        // {
+        //     int? LoggedinuserId = HttpContext.Session.GetInt32("loggedinuser");
+        //     if(LoggedinuserId == null)
+        //     {
+        //         return RedirectToAction("LoginRegistration");
+        //     }
+
+        //     // List<Guest> WeddingGuests = _context.Weddings
+        //     //     .Include(w => w.Guests)
+        //     //     .ThenInclude(g => g.User)
+        //     //     .Where(w => w.Guests.Any(p => p.WeddingId == weddingId))
+        //     //     .ToList();
+        // }
+
     }
 }

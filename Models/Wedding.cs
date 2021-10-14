@@ -20,13 +20,17 @@ namespace cd_c_weddingPlanner.Models
         [Required(ErrorMessage = "Wedding Date is required.")]
         [Display(Name = "Wedding Date: ")]
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "MMMM dd, yyyy", ApplyFormatInEditMode = true)]
+        [FutureDateValidation(ErrorMessage = "Date can not be in the past.")]
         public DateTime WeddingDate {get;set;}
 
         [Required(ErrorMessage ="Wedding Location is required.")]
         [Display(Name =  "Wedding Location: ")]
         public string Location {get;set;}
 
-        public List<Guest> Users {get;set;}
+        public int UserId {get;set;}
+        public User User {get;set;}
+        public List<Guest> Guests {get;set;}
+        
 
         public DateTime CreatedAt {get;set;} = DateTime.Now;
 

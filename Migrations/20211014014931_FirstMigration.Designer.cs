@@ -9,7 +9,7 @@ using cd_c_weddingPlanner.Models;
 namespace cd_c_weddingPlanner.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20211013030652_FirstMigration")]
+    [Migration("20211014014931_FirstMigration")]
     partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -103,10 +103,15 @@ namespace cd_c_weddingPlanner.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("WeddingDate")
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("WeddingId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Weddings");
                 });
@@ -122,6 +127,15 @@ namespace cd_c_weddingPlanner.Migrations
                     b.HasOne("cd_c_weddingPlanner.Models.Wedding", "Wedding")
                         .WithMany("Users")
                         .HasForeignKey("WeddingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("cd_c_weddingPlanner.Models.Wedding", b =>
+                {
+                    b.HasOne("cd_c_weddingPlanner.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

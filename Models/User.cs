@@ -34,7 +34,7 @@ namespace cd_c_weddingPlanner.Models
         public string Password {get;set;}
 
         [NotMapped]
-        [Compare("Password")]
+        [Compare("Password", ErrorMessage = "Passwords do not match.")]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm Password: ")]
         public string Confirm {get;set;}
