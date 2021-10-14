@@ -9,7 +9,7 @@ namespace cd_c_weddingPlanner.Models
         public override bool IsValid(object value)
         {
             DateTime thisDate = Convert.ToDateTime(value);
-            return thisDate <= DateTime.Now;
+            return thisDate >= DateTime.Now;
         }
     }
 }

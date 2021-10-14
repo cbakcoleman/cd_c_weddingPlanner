@@ -152,7 +152,61 @@ namespace cd_c_weddingPlanner.Controllers
                 return View("NewWedding");
             }
         }
-        
+
+        [HttpGet("wedding/{weddingId}/attend")]
+        public RedirectToActionResult Attend(int weddingId)
+        {
+            int? LoggedinuserId = HttpContext.Session.GetInt32("loggedinuser");
+            if(LoggedinuserId == null)
+            {
+                return RedirectToAction("LoginRegistration");
+            }
+            // else if(_context.Guests.Any(g => g.WeddingId == weddingId && g.UserId == (int)LoggedinuserId))
+            // {
+            //     return RedirectToAction("Dashboard");
+            // }
+            Guest NewRsvp = new Guest()
+            {
+                WeddingId = weddingId,
+                UserId = (int)LoggedinuserId
+            };
+            _context.Add(NewRsvp);
+            _context.SaveChanges();
+
+            return RedirectToAction("Dashboard");
+        }
+
+        [HttpGet("wedding/{weddingId}/decline")]
+        public RedirectToActionResult Decline(int weddingId)
+        {
+            int? LoggedinuserId = HttpContext.Session.GetInt32("loggedinuser");
+            if(LoggedinuserId == null)
+            {
+                return RedirectToAction("LoginRegistration");
+            }
+            
+            Guest UnRsvp = _context.Guests.FirstOrDefault(g => g.WeddingId == weddingId && g.UserId == (int)LoggedinuserId);
+
+            _context.Remove(UnRsvp);
+            _context.SaveChanges();
+            return RedirectToAction("Dashboard");
+        }
+
+        [HttpGet("wedding/{weddingId}/delete")]
+        public RedirectToActionResult CallItOff(int weddingId)
+        {
+            int? LoggedinuserId = HttpContext.Session.GetInt32("loggedinuser");
+            if(LoggedinuserId == null)
+            {
+                return RedirectToAction("LoginRegistration");
+            }
+
+            Wedding toCallOff = _context.Weddings.FirstOrDefault(w => w.WeddingId == weddingId && w.UserId == (int)LoggedinuserId);
+
+            _context.Remove(toCallOff);
+            _context.SaveChanges();
+            return RedirectToAction("Dashboard");
+        }
         // [HttpGet("wedding/{weddingId}")]
         // public IActionResult ThisWedding(int weddingId)
         // {

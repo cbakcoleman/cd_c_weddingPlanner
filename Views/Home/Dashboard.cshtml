@@ -24,31 +24,36 @@
             <div class="col">
                 <table class="table table-striped">
                     <thead>
-                        <th scope="col">Wedding</th>
-                        <th scope="col">Date</th>
-                        <th scope="col">Guests Attending</th>
-                        <th scope="col">Actions</th>
+                        <tr>
+                            <th scope="col">Wedding</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Guests Attending</th>
+                            <th scope="col">Actions</th>
+                        </tr>
                     </thead>
                     <tbody>
                         @foreach(var wedding in Model.Weddings)
                         {
-                            <td>@wedding.Spouse1 & @wedding.Spouse2</td>
-                            <td>@wedding.WeddingDate</td>
-                            <td>@wedding.Guests.Count</td>
-                            <td>
-                                @if(wedding.Guests.Any(g => g.UserId == Model.LoggedinUserId))
-                                {
-                                    <a href="/wedding/@wedding.WeddingId/decline">Un-RSVP</a>
-                                }
-                                else if(wedding.Guests.Any(g => g.UserId != Model.LoggedinUserId))
-                                {
-                                    <a href="/wedding/@wedding.WeddingId/attend">RSVP</a>
-                                }
-                                @if(wedding.UserId == Model.LoggedinUserId)
-                                {
-                                    <a href="/wedding/@wedding.WeddingId/delete">CALL OFF THE WEDDING!</a>
-                                }
-                            </td>
+                            <tr>
+
+                                <td>@wedding.Spouse1 & @wedding.Spouse2</td>
+                                <td>@wedding.WeddingDate</td>
+                                <td>@wedding.Guests.Count</td>
+                                <td>
+                                    @if(wedding.Guests.Any(g => g.UserId == Model.LoggedinUserId))
+                                    {
+                                        <a href="/wedding/@wedding.WeddingId/decline">Un-RSVP</a>
+                                    }
+                                    else if(wedding.Guests.Any(g => g.UserId != Model.LoggedinUserId))
+                                    {
+                                        <a href="/wedding/@wedding.WeddingId/attend">RSVP</a>
+                                    }
+                                    @if(wedding.UserId == Model.LoggedinUserId)
+                                    {
+                                        <a href="/wedding/@wedding.WeddingId/delete">CALL OFF THE WEDDING!</a>
+                                    }
+                                </td>
+                            </tr>
                         }
                     </tbody>
                 </table>
