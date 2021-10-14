@@ -6,7 +6,6 @@ namespace cd_c_weddingPlanner.Models
     {
         public Wedding Wedding {get;set;}
 
-        
         public int LoggedinuserId {get;set;}
 
         public List<Guest> Guests {get;set;}

@@ -11,9 +11,32 @@
 </head>
 <body>
     <div class="container"> <!-- BEGIN WHOLE PAGE CONTAINER -->
-        <div class="row"> <!-- BEGIN HEADER ROW -->
-            <h4>@Model.Wedding.Spouse1 </h4>
+        <div class="row mt-5"> <!-- BEGIN HEADER ROW -->
+            <div class="col">
+                <h4>@Model.Wedding.Spouse1 & @Model.Wedding.Spouse2's Wedding</h4>
+            </div>
+            <div class="col">
+                <h6>
+                    <a href="/dashboard">Dashboard</a> |
+                    <a href="/logout">Logout</a>
+                </h6>
+            </div>
         </div> <!-- END HEADER ROW -->
+
+        <div class="row mt-2"> <!-- BEGIN MAIN BODY ROW -->
+            <div>
+                <h5>@Model.Wedding.WeddingDate.ToString("MMMM dd, yyyy")</h5>
+            </div>
+            <div>
+                <h6 class="mt-2">Guests Attending:</h6>
+                <ul>
+                    @foreach(var guest in Model.Wedding.Guests)
+                    {
+                    <li class="mt-1">@guest.User.FirstName  @guest.User.LastName</li>
+                    }
+                </ul>
+            </div>
+        </div> <!-- END MAIN BODY ROW -->
     </div> <!-- END WHOLE PAGE CONTAINER -->
 </body>
 </html>

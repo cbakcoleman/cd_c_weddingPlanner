@@ -50,7 +50,7 @@ namespace cd_c_weddingPlanner.Controllers
 
                 HttpContext.Session.SetInt32("LoggedinUser", usertoreg.UserId);
 
-                return RedirectToAction("LoginRegistration");
+                return RedirectToAction("Dashboard");
             }
             else
             {
@@ -145,7 +145,7 @@ namespace cd_c_weddingPlanner.Controllers
                 _context.Add(newWedding);
                 _context.SaveChanges();
 
-                return RedirectToAction("dashboard");
+                return RedirectToAction("ThisWedding", newWedding);
             }
             else
             {
@@ -161,10 +161,7 @@ namespace cd_c_weddingPlanner.Controllers
             {
                 return RedirectToAction("LoginRegistration");
             }
-            // else if(_context.Guests.Any(g => g.WeddingId == weddingId && g.UserId == (int)LoggedinuserId))
-            // {
-            //     return RedirectToAction("Dashboard");
-            // }
+            
             Guest NewRsvp = new Guest()
             {
                 WeddingId = weddingId,
@@ -221,9 +218,11 @@ namespace cd_c_weddingPlanner.Controllers
                 .ThenInclude(g => g.User)
                 .FirstOrDefault(w => w.WeddingId == weddingId);
 
+            System.Console.WriteLine();
+
             WeddingView ToDisplay = new WeddingView(Awedding, (int)LoggedinuserId);
         
-            return View();
+            return View(ToDisplay);
         }
 
     }

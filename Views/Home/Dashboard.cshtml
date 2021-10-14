@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class="container"> <!-- BEGIN WHOLE PAGE CONTAINER -->
-        <div class="row"> <!-- BEGIN HEADER ROW -->
+        <div class="row mt-5"> <!-- BEGIN HEADER ROW -->
             <div class="col">
                 <h4>Welcome to the Wedding Planner!</h4>
             </div>
@@ -37,7 +37,7 @@
                             <tr>
 
                                 <td><a href="/wedding/@wedding.WeddingId">@wedding.Spouse1 & @wedding.Spouse2</a> </td>
-                                <td>@wedding.WeddingDate</td>
+                                <td>@wedding.WeddingDate.ToString("MMMM dd, yyyy")</td>
                                 <td>@wedding.Guests.Count</td>
                                 <td>
                                     @if(wedding.Guests.Any(g => g.UserId == Model.LoggedinUserId))
